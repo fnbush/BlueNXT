@@ -3,6 +3,7 @@ package com.example.fnb.bluenxt;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ public class Main extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.t = (TextView) findViewById(R.id.text);
+        t.setMovementMethod(new ScrollingMovementMethod());
 
         this.retry = (Button) findViewById(R.id.retry);
         this.conn = (Button) findViewById(R.id.connect);
@@ -82,7 +84,7 @@ public class Main extends Activity implements View.OnClickListener {
         }*/
         } else {
             t.append("Failed, please enable and retry\n");
-            conn.setEnabled(true);
+            //conn.setEnabled(true);
         }
     }
 
@@ -111,7 +113,7 @@ public class Main extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.retry:
-                t.append("Retry\n");
+                t.append("Retrying...\n");
                 init();
                 break;
             case R.id.connect:
@@ -124,7 +126,6 @@ public class Main extends Activity implements View.OnClickListener {
                 sendBeep();
                 break;
             //default:
-            //connect(v.)
         }
     }
 
@@ -139,11 +140,13 @@ public class Main extends Activity implements View.OnClickListener {
             String[] a = null;
             Boolean connected = false;
             //setContentView(R.layout.activity_main);
-            if (bTComm.connectToNXT(nxt)) t.append("Connection Sucess\n");
+            if (bTComm.connectToNXT(nxt)) {
+                t.append("Connection Sucess\n");
+                beep.setEnabled(true);
+            }
             else {
                 t.append("Connection Failed\n");
             }
-            beep.setEnabled(true);
             return a;
         }
 
