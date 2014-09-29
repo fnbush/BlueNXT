@@ -2,6 +2,7 @@ package com.example.fnb.bluenxt;
 
         import java.io.IOException;
         import java.io.InputStreamReader;
+        import java.io.OutputStream;
         import java.io.OutputStreamWriter;
         import java.util.HashSet;
         import java.util.Set;
@@ -60,13 +61,13 @@ public class BTComm {
 
     }
 
-    public void writeMessage(byte msg) throws InterruptedException{
-        BluetoothSocket connSock= socket_nxt;
+    public void writeMessage(byte[] msg) throws InterruptedException{
             try {
-            OutputStreamWriter out=new OutputStreamWriter(connSock.getOutputStream());
+            //OutputStreamWriter out = new OutputStreamWriter(socket_nxt.getOutputStream());
+            OutputStream out = socket_nxt.getOutputStream();
             out.write(msg);
-            out.flush();
-            Thread.sleep(1000);
+            //out.flush();
+            //Thread.sleep(1000);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

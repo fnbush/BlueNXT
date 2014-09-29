@@ -90,15 +90,9 @@ public class Main extends Activity implements View.OnClickListener {
 
     public void sendBeep() {
         t.append("Attempting to send message...\n");
+        byte[] msg = {(byte) 0x06,(byte) 0x00,(byte) 0x80,(byte) 0x03,(byte) 0x0B,(byte) 0x02,(byte) 0xF4,(byte) 0x01};
         try {
-            bTComm.writeMessage((byte) 0x06);
-            bTComm.writeMessage((byte) 0x00);
-            bTComm.writeMessage((byte) 0x80);
-            bTComm.writeMessage((byte) 0x03);
-            bTComm.writeMessage((byte) 0x0B);
-            bTComm.writeMessage((byte) 0x02);
-            bTComm.writeMessage((byte) 0xF4);
-            bTComm.writeMessage((byte) 0x01);
+            bTComm.writeMessage(msg);
             t.append("message sent\n");
         } catch (InterruptedException e) {
             t.append("message failed\n");
