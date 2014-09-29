@@ -24,6 +24,16 @@
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
+                name="nxt_robot"
+                path="D:\workspace\Android\BlueNXT2\app\src\main\res\drawable-xxhdpi\nxt_robot.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="activity_device"
+                path="D:\workspace\Android\BlueNXT2\app\src\main\res\layout\activity_device.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="activity_main"
                 path="D:\workspace\Android\BlueNXT2\app\src\main\res\layout\activity_main.xml"
                 qualifiers=""
@@ -70,11 +80,6 @@
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
-            <file
-                name="activity_device"
-                path="D:\workspace\Android\BlueNXT2\app\src\main\res\layout\activity_device.xml"
-                qualifiers=""
-                type="layout" />
         </source>
         <source path="D:\workspace\Android\BlueNXT2\app\build\generated\res\rs\debug" />
         <source path="D:\workspace\Android\BlueNXT2\app\build\generated\res\generated\debug" />

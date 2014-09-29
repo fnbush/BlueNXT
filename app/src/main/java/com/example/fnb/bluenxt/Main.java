@@ -17,23 +17,15 @@ import android.widget.TextView;
 public class Main extends Activity implements View.OnClickListener {
     BTComm bTComm = new BTComm();
     TextView t;
+    String nxt;
+    String text = "Initilizing...\n" ;
+    String[] s;
     Button retry, conn, beep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        this.t = (TextView) findViewById(R.id.text);
-        t.setMovementMethod(new ScrollingMovementMethod());
-
-        this.retry = (Button) findViewById(R.id.retry);
-        this.conn = (Button) findViewById(R.id.connect);
-        this.beep = (Button) findViewById(R.id.beep);
-        retry.setOnClickListener(this);
-        conn.setOnClickListener(this);
-        beep.setOnClickListener(this);
-        t.setText("Initilizing...\n");
-        init();
+        refreshMainLayout();
     }
 
     @Override
@@ -56,18 +48,32 @@ public class Main extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-    public void init() {
-        String[] s = null;
+    public void refreshMainLayout(){
+        setContentView(R.layout.activity_main);
+        this.t = (TextView) findViewById(R.id.text);
+        t.setMovementMethod(new ScrollingMovementMethod());
 
+        this.retry = (Button) findViewById(R.id.retry);
+        this.conn = (Button) findViewById(R.id.connect);
+        this.beep = (Button) findViewById(R.id.beep);
+
+        retry.setOnClickListener(this);
+        conn.setOnClickListener(this);
+        beep.setOnClickListener(this);
+
+        t.setText(text);
+    }
+
+    public void init() {
         t.append("Verifying Bluetooth Enabled...\n");
 
         if (bTComm.enableBT()) {
             t.append("Bluetooth is enabled\n");
-            conn.setEnabled(true);
-        /*
+
         t.append("Attempting to find devices...\n");
         try {
             s = bTComm.findDevice();
+            text = t.getText().toString();
             setContentView(R.layout.activity_device);
             ViewGroup linearLayout = (ViewGroup) findViewById(R.id.device_layout);
             for (int i=0;i < s.length;i++){
@@ -81,10 +87,9 @@ public class Main extends Activity implements View.OnClickListener {
         } catch (NullPointerException e) {
             t.append("No device found\n");
             Log.e("NXT", "Null Ponter", e);
-        }*/
+        }
         } else {
             t.append("Failed, please enable and retry\n");
-            //conn.setEnabled(true);
         }
     }
 
@@ -112,14 +117,18 @@ public class Main extends Activity implements View.OnClickListener {
                 break;
             case R.id.connect:
                 t.append("Attempting to connect...\n");
-                Connect connect = new Connect("00:16:53:08:79:2B");
+                Connect connect = new Connect(nxt); // "00:16:53:08:79:2B"
                 connect.doInBackground();
                 break;
             case R.id.beep:
-                t.append("Attempting to send beep...");
+                t.append("Attempting to send beep...\n");
                 sendBeep();
                 break;
-            //default:
+            default:
+                nxt = s[v.getId()];
+                refreshMainLayout();
+                conn.setEnabled(true);
+                t.append("Device Chosen: " + nxt + "\n");
         }
     }
 
@@ -133,7 +142,6 @@ public class Main extends Activity implements View.OnClickListener {
         public String[] doInBackground(String... params){
             String[] a = null;
             Boolean connected = false;
-            //setContentView(R.layout.activity_main);
             if (bTComm.connectToNXT(nxt)) {
                 t.append("Connection Sucess\n");
                 beep.setEnabled(true);

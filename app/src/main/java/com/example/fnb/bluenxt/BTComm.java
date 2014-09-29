@@ -42,19 +42,19 @@ public class BTComm {
         localAdapter = BluetoothAdapter.getDefaultAdapter();
         //get the BluetoothDevice of the NXT
 
-        //try to connect to the nxt
-        try {
-            BluetoothDevice nxt_1 = localAdapter.getRemoteDevice(nxt);
-            socket_nxt = nxt_1.createRfcommSocketToServiceRecord(UUID
-                    .fromString("00001101-0000-1000-8000-00805F9B34FB"));
-            socket_nxt.connect();
-            success = true;
+            //try to connect to the nxt
+            try {
+                BluetoothDevice nxt_1 = localAdapter.getRemoteDevice(nxt);
+                socket_nxt = nxt_1.createRfcommSocketToServiceRecord(UUID
+                        .fromString("00001101-0000-1000-8000-00805F9B34FB"));
+                socket_nxt.connect();
+                success = true;
 
-        } catch (IOException e) {
-            Log.d("Bluetooth","Err: Device not found or cannot connect");
-            success=false;
-        } catch (NullPointerException e){
-            Log.e("BTComm","Null Pointer");
+            } catch (IOException e) {
+                Log.d("Bluetooth","Err: Device not found or cannot connect");
+                success=false;
+            } catch (NullPointerException e){
+                Log.e("BTComm","Null Pointer");
             success=false;
         }
         return success;
